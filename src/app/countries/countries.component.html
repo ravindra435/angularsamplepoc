@@ -1,0 +1,64 @@
+<div class="container">
+    <h1 class="text-center ">Countries Information</h1>
+
+    <br>
+    <br>
+    <!-- <div class="align">
+        <h4>Sort</h4>
+
+        <select [(ngModel)]="sortColumn">
+            <option>name</option>
+            <option>capital</option>
+            <option>population</option>
+        </select>
+
+        <select [(ngModel)]="order">
+            <option value="1">Ascending Order</option>
+            <option value="-1">Descending Order</option>
+        </select>
+        <input type="button" value="Sort" class="btn btn-primary" (click)="onSortClick()">
+    </div> -->
+
+
+    <div> <input type="text" [(ngModel)]="term" placeholder="Search"></div>
+
+    <table border="1" cellpadding="10px" cellspacing="10px" align="center" style="font-size: 20px;">
+
+        <thead style="background-color:lightgoldenrodyellow;">
+
+            <tr>
+                <th [class.active]="order === 'id'" (click)="setOrder('id')">
+                    CountryName <span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                </th>
+                <th [class.active]="order === 'info.name'" (click)="setOrder('info.name')"
+                    class="mdl-data-table__cell--non-numeric">
+                    Capital<span [hidden]="reverse">▼</span><span [hidden]="!reverse">▲</span>
+                </th>
+
+                <th [class.active]="order === 'info.age'" (click)="setOrder('info.age')">
+                    Population <span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span>
+                </th>
+                <th>Flag</th>
+            </tr>
+
+        </thead>
+        <tbody style="background-color:rgb(238, 230, 231);">
+            <tr
+                *ngFor=" let row of  countries | orderBy: order:reverse, let country of countries | filter:term | paginate: { id:'list',itemsPerPage: 10, currentPage:page,totalItems:totalRecords};let i=index">
+                <td>{{country.name}}</td>
+                <td>{{country.capital}}</td>
+                <td>{{country.population}}</td>
+                <td>
+                    <img [src]="country.flag" width="100px" height="50px" />
+                </td>
+                <td>
+                    <input type="button" class="btn btn-danger" (click)="onDeleteClick(i)" value="Delete" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <pagination-controls id="list" (pageChange)="page = $event" maxSize="10" directionLinks="true" autoHide="true"
+        responsive="true" previousLabel="Previous" nextLabel="Next">
+    </pagination-controls>
+</div>
